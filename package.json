@@ -22,8 +22,6 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "cross-env": "^10.1.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -31,7 +29,6 @@
     "jest": "^27.3.1",
     "sequelize-cli": "^6.3.0",
     "sequelize-fixtures": "^1.2.0",
-    "superagent": "^6.1.0",
     "supertest": "^6.1.6"
   },
   "jest": {
