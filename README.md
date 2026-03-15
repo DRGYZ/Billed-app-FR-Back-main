@@ -1,107 +1,128 @@
-# Billapp backend
+# Billed Backend
 
-================ FR ====================
+Backend du projet OpenClassrooms P9 Billed.
 
-## Comment lancer l'API en local:
+Cette API gere l'authentification, les utilisateurs et les notes de frais consommees par le frontend. Les donnees sont stockees en SQLite et les migrations sont gerees avec Sequelize.
 
-### Cloner le projet:
-```
-git clone https://github.com/OpenClassrooms-Student-Center/Billed-app-FR-Back.git
-```
-### Utilisez une version de node compatible
-Si vous utilisez une version récente de node sur votre ordinateur, il se peut qu'il y ai des erreurs lors de l'installation de certaines dépendances. Pour cela il est important de vous assurer que vous ayez une version de node compatible par exemple node v16 ou v18. 
+## Stack
 
-Voici quelques indications pour gérer les version de node sur votre ordinateur: 
+- Node.js
+- Express
+- Sequelize
+- SQLite
+- Multer
+- JSON Web Token
+- Jest
+- Supertest
 
-#### Sur Windows
-- Installer NVM pour windows (https://github.com/coreybutler/nvm-windows/tags)
-- changer la version de node pour une version compatible (par exemple 18.16.1) pous cela suivre les instruction de NVM pour windows : 
-    - `nvm install 18.16.1`
-    - `nvm use 18.16.1`
-- Ouvrir Powershell en mode administrateur
-- Entrer la commande «  Set-ExecutionPolicy RemoteSigned » pour pouvoir gérer l’execution de scripts dans powershell
-- Fermer toutes les instances de terminal
-- entrer la commande `npm install -g win-node-env` pour installer la gestion des variables d’environnement node pour window
+## Prerequis
 
-#### Sur Mac
-- Installer NVM (Node Version Manager) - https://github.com/nvm-sh/nvm
-- changer la version de node pour une version compatible (par exemple 18.16.1) pous cela suivre les instruction de NVM: 
-    - `nvm install 18.16.1`
-    - `nvm use 18.16.1`
-### Acceder au repertoire du projet :
-```
-cd Billed-app-FR-Back
-```
+- Node.js
+- npm
 
-### Installer les dépendances du projet :
+Version verifiee dans ce repo : `Node.js 24.0.2` et `npm 11.3.0`.
 
-```
+## Installation
+
+```bash
+cd Billed-app-FR-Back-main
 npm install
 ```
 
-### Lancer l'API :
+## Lancer l'API
 
-```
+```bash
+cd Billed-app-FR-Back-main
 npm run run:dev
 ```
 
-### Accéder à l'API :
+L'API est disponible sur :
 
-L'api est accessible sur le port `5678` en local, c'est à dire `http://localhost:5678`
-
-## Utilisateurs par défaut:
-
-### administrateur : 
+```text
+http://localhost:5678
 ```
-utilisateur : admin@test.tld 
+
+Le script `run:dev` applique automatiquement les migrations sur la base de developpement.
+
+## Base de donnees et migrations
+
+- Base de developpement : `database_dev.sqlite`
+- Base de test : `database_test.sqlite`
+- Configuration Sequelize : `config/config.json`
+- Migrations : dossier `migrations/`
+
+## Comptes de test
+
+Ces comptes sont verifies dans `database_dev.sqlite` :
+
+```text
+Administrateur
+email : admin@test.tld
 mot de passe : admin
-```
-### employé :
-```
-utilisateur : employee@test.tld
+
+Employe
+email : employee@test.tld
 mot de passe : employee
 ```
 
+## API disponible
 
-================ EN ====================
+Routes exposees par l'application :
 
+- `/auth`
+- `/users`
+- `/bills`
 
-## How to run the API locally :
+Exemple de route verifiee dans les tests :
 
+- `POST /auth/login`
 
-### Clone the projet:
-```
-git clone https://github.com/OpenClassrooms-Student-Center/Billed-app-FR-Back.git
-```
+## Tests
 
-### Go to the project directory :
-```
-cd Billed-app-FR-Back
-```
+Lancer toute la suite :
 
-### Install project dependancies :
-
-```
-npm install
+```bash
+npm test
 ```
 
-### Run the API :
+Ce script :
 
-```
-npm run:dev
+- applique les migrations sur l'environnement `test`
+- execute toute la suite Jest sans mode watch
+
+Resultat actuel :
+
+```text
+6/6 suites
+40/40 tests
 ```
 
-### Access to the PAI :
+## Commandes utiles
 
-The API is locally available on port `5678`, go to `http://localhost:5678`
+```bash
+npm run run:dev
+npm test
+npm run lint
+```
 
-### administrateur : 
+## Structure du projet
+
+```text
+app.js           configuration Express
+server.js        point d'entree du serveur
+config/          configuration Sequelize
+controllers/     logique metier
+middlewares/     middleware d'authentification
+migrations/      schema de base de donnees
+models/          modeles Sequelize
+public/          fichiers uploades
+routes/          routes API
+services/        services JWT / password
+tests/           tests d'integration API
 ```
-utilisateur : admin@company.tld 
-mot de passe : admin
-```
-### employé :
-```
-utilisateur : employee@company.tld
-mot de passe : employee
-```
+
+## Notes de setup
+
+- Les uploads sont stockes dans le dossier `public/`.
+- Les tests backend s'appuient sur la base SQLite de test et reinitialisent les fixtures automatiquement.
+- Le script `npm test` est maintenant portable Windows / macOS / Linux via `cross-env`.
