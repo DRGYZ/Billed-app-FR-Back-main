@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { Bill } = require('../models');
 
 const getFileURL = (filePath) => `http://localhost:5678/${filePath}`;
@@ -21,6 +22,12 @@ const create = async (req, res) => {
       amount,
     } = req.body;
     const { file } = req;
+    const hasPicture = file && isPicture(file.mimetype);
+
+    if (file && !hasPicture && file.path) {
+      fs.unlink(file.path, () => {});
+    }
+
     const bill = await Bill.create({
       name,
       type,
@@ -31,8 +38,8 @@ const create = async (req, res) => {
       commentary,
       status,
       commentAdmin,
-      fileName: isPicture(file.mimetype) ? file.originalname : 'null',
-      filePath: isPicture(file.mimetype) ? file.path : 'null',
+      fileName: hasPicture ? file.originalname : false,
+      filePath: hasPicture ? file.path : false,
       amount,
     });
     return res.status(201).json(bill);
