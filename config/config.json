@@ -5,14 +5,16 @@
     "database": "database_development",
     "host": "127.0.0.1",
     "dialect": "sqlite",
-    "storage": "./database_dev.sqlite"
+    "storage": "./database_demo.sqlite",
+    "logging": false
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "dialect": "sqlite",
-    "storage": "./database_test.sqlite"
+    "storage": "./database_test.sqlite",
+    "logging": false
   },
   "production": {
     "username": "root",
