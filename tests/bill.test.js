@@ -122,14 +122,19 @@ describe("Test the root path", () => {
       .expect(401);
   });
 
-  test("It should create a bill", () => {
-    return request(app)
+  test("It should create a bill and serve its uploaded receipt", async () => {
+    const response = await request(app)
       .post("/bills")
       .set("Authorization", `Bearer ${jwtValue}`)
       .set("Accept", "multipart/form-data")
       .field('name','bill-name')
       .attach('file', 'tests/fixture-cat.jpg')
       .expect(201);
+    expect(response.body.filePath).toMatch(/^public\/[a-f0-9]{32}$/);
+    await request(app)
+      .get(`/${response.body.filePath}`)
+      .expect("Cross-Origin-Resource-Policy", "cross-origin")
+      .expect(200);
   });
 
   test("It should create a bill with non picture file type and not save file", () => {

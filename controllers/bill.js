@@ -39,7 +39,7 @@ const create = async (req, res) => {
       status,
       commentAdmin,
       fileName: hasPicture ? file.originalname : false,
-      filePath: hasPicture ? file.path : false,
+      filePath: hasPicture ? `public/${file.filename}` : false,
       amount,
     });
     return res.status(201).json(bill);

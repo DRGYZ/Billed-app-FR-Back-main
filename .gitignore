@@ -1,3 +1,6 @@
-database_test.sqlite
+database_*.sqlite
+database_*.sqlite-*
 node_modules/
 coverage/
+/public/
+/graphify-out/

@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
+const { randomBytes } = require('crypto');
 
-const secret = 'a-secret-word';
+if (process.env.NODE_ENV === 'production' && !process.env.BILLED_JWT_SECRET) {
+  throw new Error('BILLED_JWT_SECRET is required in production');
+}
+const secret = process.env.BILLED_JWT_SECRET || randomBytes(32);
 
 const encrypt = (value) => jwt.sign(
   {
